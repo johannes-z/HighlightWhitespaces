@@ -11,7 +11,9 @@ Config summary (see README.md for details):
     "highlight_whitespaces_space_highlight_scope_name": "invalid",
     "highlight_whitespaces_tab_highlight_scope_name": "invalid",
     "highlight_whitespaces_file_max_size": 1048576,
-    "highlight_whitespaces_enabled": true
+    "highlight_whitespaces_enabled": true,
+    "highlight_whitespaces_check_spaces": true,
+    "highlight_whitespaces_check_tabs": true
     }
 
 Forked from https://github.com/SublimeText/TrailingSpaces/ by Jean-Denis Vauguet <jd@vauguet.fr>, Oktay Acikalin <ok@ryotic.de>
@@ -27,6 +29,8 @@ import sublime_plugin
 DEFAULT_MAX_FILE_SIZE = 1048576
 DEFAULT_COLOR_SCOPE_NAME = "invalid"
 DEFAULT_IS_ENABLED = True
+DEFAULT_CHECK_SPACES = True
+DEFAULT_CHECK_TABS = True
 
 #Set whether the plugin is on or off
 hws_settings = sublime.load_settings('highlight_whitespaces.sublime-settings')
@@ -54,14 +58,16 @@ def highlight_whitespaces(view):
     tab_scope_name = hws_settings.get('highlight_whitespaces_tab_highlight_scope_name',
                                        DEFAULT_COLOR_SCOPE_NAME)
     if view.size() <= max_size and not is_find_results(view):
-        space_regions = find_whitespaces_spaces(view)
-        view.add_regions('WhitespacesHighlightListener',
-                         space_regions, space_scope_name, '',
-                         sublime.DRAW_EMPTY)
-        tab_regions = find_whitespaces_tabs(view)
-        view.add_regions('WhitespacesHighlightListener2',
-                         tab_regions, tab_scope_name, '',
-                         sublime.DRAW_EMPTY)
+        if hws_settings.get('highlight_whitespaces_check_spaces', DEFAULT_CHECK_SPACES):
+            space_regions = find_whitespaces_spaces(view)
+            view.add_regions('WhitespacesHighlightListener',
+                             space_regions, space_scope_name, '',
+                             sublime.DRAW_EMPTY)
+        if hws_settings.get('highlight_whitespaces_check_tabs', DEFAULT_CHECK_TABS):
+            tab_regions = find_whitespaces_tabs(view)
+            view.add_regions('WhitespacesHighlightListener2',
+                             tab_regions, tab_scope_name, '',
+                             sublime.DRAW_EMPTY)
 
 
 # Clear all white spaces
