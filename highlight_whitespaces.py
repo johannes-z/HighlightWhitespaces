@@ -27,6 +27,7 @@ import sublime_plugin
 DEFAULT_MAX_FILE_SIZE = 1048576
 DEFAULT_COLOR_SCOPE_NAME = "invalid"
 DEFAULT_IS_ENABLED = True
+DEFAULT_LAST_WHITESPACE = False
 
 #Set whether the plugin is on or off
 hws_settings = sublime.load_settings('highlight_whitespaces.sublime-settings')
@@ -39,7 +40,12 @@ def is_find_results(view):
 
 # Return an array of regions matching whitespaces.
 def find_whitespaces_spaces(view):
-    return view.find_all(' {2,}')
+    last_whitespace = bool(hws_settings.get('highlight_last_whitespace',DEFAULT_LAST_WHITESPACE))
+    regex = ' {2,}'
+    if last_whitespace:
+	regex += '| {1,}$'
+
+    return view.find_all(regex)
 
 def find_whitespaces_tabs(view):
     return view.find_all('\t+')

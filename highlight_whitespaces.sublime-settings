@@ -9,5 +9,8 @@
 	"highlight_whitespaces_file_max_size": 1048576,
 
 	// By default plugin is enabled or disabled (true|false)
-	"highlight_whitespaces_enabled": true
+	"highlight_whitespaces_enabled": true,
+	
+	// Allow the highlighting of the last whitespace, one or more time
+	"highlight_last_whitespace": true
 }
