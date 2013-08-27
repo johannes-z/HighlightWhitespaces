@@ -3,7 +3,7 @@
 //	"highlight_whitespaces_space_highlight_scope_name": "Whitespaces.space.highlight",
 
 // Tabs color is determined by scope (default, "invalid")
-//	 "highlight_whitespaces_tab_highlight_scope_name": "Whitespaces.tab.highlight",
+//	"highlight_whitespaces_tab_highlight_scope_name": "Whitespaces.tab.highlight",
 
 // Max file size to search
 	"highlight_whitespaces_file_max_size": 1048576,

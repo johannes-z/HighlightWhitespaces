@@ -13,7 +13,8 @@ Config summary (see README.md for details):
     "highlight_whitespaces_file_max_size": 1048576,
     "highlight_whitespaces_enabled": true,
     "highlight_whitespaces_check_spaces": true,
-    "highlight_whitespaces_check_tabs": true
+    "highlight_whitespaces_check_tabs": true,
+    "highlight_last_whitespace": true
     }
 
 Forked from https://github.com/SublimeText/TrailingSpaces/ by Jean-Denis Vauguet <jd@vauguet.fr>, Oktay Acikalin <ok@ryotic.de>
