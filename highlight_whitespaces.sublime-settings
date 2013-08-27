@@ -15,5 +15,8 @@
 	"highlight_whitespaces_check_spaces": true,
 
 // Whether to check for tabs
-	"highlight_whitespaces_check_tabs": true
+	"highlight_whitespaces_check_tabs": true,
+
+// Allow the highlighting of the last whitespace, one or more time
+	"highlight_last_whitespace": true
 }
