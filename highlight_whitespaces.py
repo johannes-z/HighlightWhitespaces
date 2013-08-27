@@ -48,7 +48,7 @@ def find_whitespaces_spaces(view):
     last_whitespace = bool(hws_settings.get('highlight_last_whitespace',DEFAULT_LAST_WHITESPACE))
     regex = ' {2,}'
     if last_whitespace:
-	regex += '| {1,}$'
+        regex += '| {1,}$'
 
     return view.find_all(regex)
 
