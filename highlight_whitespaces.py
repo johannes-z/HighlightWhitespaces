@@ -11,7 +11,7 @@ Config summary (see README.md for details):
     "highlight_whitespaces_space_highlight_scope_name": "invalid",
     "highlight_whitespaces_tab_highlight_scope_name": "invalid",
     "highlight_whitespaces_file_max_size": 1048576,
-    "highlight_whitespaces_enabled": false,
+    "highlight_whitespaces_enabled": true,
     "highlight_whitespaces_check_spaces": true,
     "highlight_whitespaces_check_tabs": true,
     "highlight_last_whitespace": true
@@ -29,7 +29,7 @@ import sublime_plugin
 
 DEFAULT_MAX_FILE_SIZE = 1048576
 DEFAULT_COLOR_SCOPE_NAME = "invalid"
-DEFAULT_IS_ENABLED = False
+DEFAULT_IS_ENABLED = True
 DEFAULT_CHECK_SPACES = True
 DEFAULT_CHECK_TABS = True
 DEFAULT_LAST_WHITESPACE = False
