@@ -14,6 +14,7 @@ Config summary (see README.md for details):
     "highlight_whitespaces_enabled": true,
     "highlight_whitespaces_check_spaces": true,
     "highlight_whitespaces_check_tabs": true,
+    "highlight_whitespaces_single_space": false,
     "highlight_last_whitespace": true
     }
 
@@ -31,6 +32,7 @@ DEFAULT_MAX_FILE_SIZE = 1048576
 DEFAULT_COLOR_SCOPE_NAME = "invalid"
 DEFAULT_IS_ENABLED = True
 DEFAULT_CHECK_SPACES = True
+DEFAULT_SINGLE_SPACE = False
 DEFAULT_CHECK_TABS = True
 DEFAULT_LAST_WHITESPACE = False
 
@@ -51,9 +53,13 @@ def is_find_results(view):
 def find_whitespaces_spaces(view):
     hws_settings = get_settings()
     last_whitespace = bool(hws_settings.get('highlight_last_whitespace',DEFAULT_LAST_WHITESPACE))
-    regex = ' {1,}|\t | \t'
-    if last_whitespace:
-        regex += '| {1,}$'
+    single_space = bool(hws_settings.get('highlight_whitespaces_single_space',DEFAULT_SINGLE_SPACE))
+    if single_space:
+        regex = ' +'
+    else:
+        regex = ' {2,}|\t | \t'
+        if last_whitespace:
+            regex += '| {1,}$'
 
     return view.find_all(regex)
 
