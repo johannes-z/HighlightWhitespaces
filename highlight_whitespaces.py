@@ -11,7 +11,7 @@ Config summary (see README.md for details):
     "highlight_whitespaces_space_highlight_scope_name": "invalid",
     "highlight_whitespaces_tab_highlight_scope_name": "invalid",
     "highlight_whitespaces_file_max_size": 1048576,
-    "highlight_whitespaces_enabled": true,
+    "highlight_whitespaces_enabled": false,
     "highlight_whitespaces_check_spaces": true,
     "highlight_whitespaces_check_tabs": true,
     "highlight_last_whitespace": true
@@ -29,7 +29,7 @@ import sublime_plugin
 
 DEFAULT_MAX_FILE_SIZE = 1048576
 DEFAULT_COLOR_SCOPE_NAME = "invalid"
-DEFAULT_IS_ENABLED = True
+DEFAULT_IS_ENABLED = False
 DEFAULT_CHECK_SPACES = True
 DEFAULT_CHECK_TABS = True
 DEFAULT_LAST_WHITESPACE = False
@@ -39,14 +39,19 @@ hws_settings = sublime.load_settings('highlight_whitespaces.sublime-settings')
 hws_enabled = bool(hws_settings.get('highlight_whitespaces_enabled',
                                                DEFAULT_IS_ENABLED))
 
+def get_settings():
+    s = sublime.load_settings('highlight_whitespaces.sublime-settings')
+    return s
+
 # Determine if the view is a find results view
 def is_find_results(view):
     return view.settings().get('syntax') and "Find Results" in view.settings().get('syntax')
 
 # Return an array of regions matching whitespaces.
 def find_whitespaces_spaces(view):
+    hws_settings = get_settings()
     last_whitespace = bool(hws_settings.get('highlight_last_whitespace',DEFAULT_LAST_WHITESPACE))
-    regex = ' {2,}|\t | \t'
+    regex = ' {1,}|\t | \t'
     if last_whitespace:
         regex += '| {1,}$'
 
@@ -58,6 +63,8 @@ def find_whitespaces_tabs(view):
 
 # Highlight whitespaces
 def highlight_whitespaces(view):
+    hws_settings = get_settings()
+
     max_size = hws_settings.get('highlight_whitespaces_file_max_size',
                                DEFAULT_MAX_FILE_SIZE)
     space_scope_name = hws_settings.get('highlight_whitespaces_space_highlight_scope_name',
