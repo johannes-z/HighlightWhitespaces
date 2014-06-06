@@ -33,6 +33,10 @@ menu.
 
 The default toggle highlight shortcut is ```ctrl+alt+w``` (```cmd+alt+w``` for OS X)
 
+### Disable highlighting when Sublime Text starts up
+
+Change `highlight_whitespaces_enabled` from the default of `true` to `false`.
+
 ### Change the highlighting color
 
 One may also change the highlighting color, providing a scope name such
