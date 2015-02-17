@@ -8,6 +8,10 @@
 // End-of-line color is determined by scope (default, "invalid")
 //	"highlight_whitespaces_eol_highlight_scope_name": "Whitespaces.eol.highlight",
 
+// End-of-line color is determined by scope (default, "invalid")
+//	"highlight_whitespaces_mixed_highlight_scope_name": "Whitespaces.eol.highlight",
+
+
 // Max file size to search
 	"highlight_whitespaces_file_max_size": 1048576,
 
@@ -22,6 +26,9 @@
 
 // Whether to check for end-of-line whitespace
 	"highlight_whitespaces_check_eol": true,
+
+// Whether to check for mixed tabs and spaces
+	"highlight_whitespaces_check_mixed": false,
 
 // Allow the highlighting of the last whitespace, one or more time
 	"highlight_last_whitespace": true
