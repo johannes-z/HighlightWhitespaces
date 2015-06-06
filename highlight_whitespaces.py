@@ -37,7 +37,9 @@ DEFAULT_COLOR_SCOPE_NAME = "invalid"
 DEFAULT_IS_ENABLED = True
 DEFAULT_CHECK_SPACES = True
 DEFAULT_SINGLE_SPACE = False
+DEFAULT_CHECK_EOL = True
 DEFAULT_CHECK_TABS = True
+DEFAULT_CHECK_MIXED = True
 DEFAULT_LAST_WHITESPACE = False
 
 hws_toggled = False
@@ -91,6 +93,14 @@ def find_whitespaces_tabs(view):
   return view.find_all('\t+')
 
 
+def find_whitespaces_eol(view):
+    return view.find_all('[\t ]+$')
+
+
+def find_whitespaces_mixed(view):
+    return view.find_all('(\t )|( \t)')
+
+
 # Highlight whitespaces
 def highlight_whitespaces(view):
   hws_settings = get_settings()
@@ -103,6 +113,15 @@ def highlight_whitespaces(view):
   tab_scope_name = \
       hws_settings.get('highlight_whitespaces_tab_highlight_scope_name',
                        DEFAULT_COLOR_SCOPE_NAME)
+
+  eol_scope_name = \
+      hws_settings.get('highlight_whitespaces_eol_highlight_scope_name',
+                       DEFAULT_COLOR_SCOPE_NAME)
+
+  mixed_scope_name = \
+      hws_settings.get('highlight_whitespaces_mixed_highlight_scope_name',
+                       DEFAULT_COLOR_SCOPE_NAME)
+
   if view.size() <= max_size and not is_find_results(view):
     if hws_settings.get('highlight_whitespaces_check_spaces',
                         DEFAULT_CHECK_SPACES):
@@ -110,11 +129,25 @@ def highlight_whitespaces(view):
       view.add_regions('WhitespacesHighlightListener',
                        space_regions, space_scope_name, '',
                        sublime.DRAW_EMPTY)
+
     if hws_settings.get('highlight_whitespaces_check_tabs',
                         DEFAULT_CHECK_TABS):
       tab_regions = find_whitespaces_tabs(view)
       view.add_regions('WhitespacesHighlightListener2',
                        tab_regions, tab_scope_name, '',
+                       sublime.DRAW_EMPTY)
+
+    if hws_settings.get('highlight_whitespaces_check_eol', DEFAULT_CHECK_EOL):
+      eol_regions = find_whitespaces_eol(view)
+      view.add_regions('WhitespacesHighlightListener3',
+                       eol_regions, eol_scope_name, '',
+                       sublime.DRAW_EMPTY)
+
+    if hws_settings.get('highlight_whitespaces_check_mixed',
+                        DEFAULT_CHECK_MIXED):
+      mixed_regions = find_whitespaces_mixed(view)
+      view.add_regions('WhitespacesHighlightListener4',
+                       mixed_regions, mixed_scope_name, '',
                        sublime.DRAW_EMPTY)
 
 
@@ -123,6 +156,8 @@ def clear_whitespaces_highlight(window):
   for view in window.views():
     view.erase_regions('WhitespacesHighlightListener')
     view.erase_regions('WhitespacesHighlightListener2')
+    view.erase_regions('WhitespacesHighlightListener3')
+    view.erase_regions('WhitespacesHighlightListener4')
 
 
 # Toggle the event listner on or off
@@ -166,6 +201,34 @@ class WhitespacesHighlightListener2(sublime_plugin.EventListener):
   def on_load(self, view):
     if hws_toggled:
       highlight_whitespaces(view)
+
+
+class WhitespacesHighlightListener3(sublime_plugin.EventListener):
+    def on_modified(self, view):
+        if hws_toggled:
+            highlight_whitespaces(view)
+
+    def on_activated(self, view):
+        if hws_toggled:
+            highlight_whitespaces(view)
+
+    def on_load(self, view):
+        if hws_toggled:
+            highlight_whitespaces(view)
+
+
+class WhitespacesHighlightListener4(sublime_plugin.EventListener):
+    def on_modified(self, view):
+        if hws_toggled:
+            highlight_whitespaces(view)
+
+    def on_activated(self, view):
+        if hws_toggled:
+            highlight_whitespaces(view)
+
+    def on_load(self, view):
+        if hws_toggled:
+            highlight_whitespaces(view)
 
 
 # pluging init for ST2

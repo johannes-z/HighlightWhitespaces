@@ -45,7 +45,9 @@ as "invalid", "comment"... in "File Settings - User":
 ```
 {
 	"highlight_whitespaces_space_highlight_scope_name": "invalid",
-	"highlight_whitespaces_tab_highlight_scope_name": "invalid"
+	"highlight_whitespaces_tab_highlight_scope_name": "invalid",
+	"highlight_whitespaces_eol_highlight_scope_name": "invalid",
+	"highlight_whitespaces_mixed_highlight_scope_name": "invalid"
 }
 ```
 
