@@ -18,11 +18,15 @@ Config summary (see README.md for details):
     "highlight_last_whitespace": true
     }
 
-Forked from https://github.com/SublimeText/TrailingSpaces/ by Jean-Denis Vauguet <jd@vauguet.fr>, Oktay Acikalin <ok@ryotic.de>
+Forked from https://github.com/SublimeText/TrailingSpaces/
+    by Jean-Denis Vauguet <jd@vauguet.fr>, Oktay Acikalin <ok@ryotic.de>
 
-@author: Kemal Hadimli <disq@sf.net>
+Forked from https://github.com/disq/HighlightWhitespaces
+    by Kemal Hadimli <disq@sf.net>
+
+@author: Salvatore Poliandro III <popsikle@gmail.com>
 @license: MIT (http://www.opensource.org/licenses/mit-license.php)
-@since: 2012-10-05
+@since: 2015-06-05
 '''
 
 import sublime
@@ -36,14 +40,24 @@ DEFAULT_SINGLE_SPACE = False
 DEFAULT_CHECK_TABS = True
 DEFAULT_LAST_WHITESPACE = False
 
-#Set whether the plugin is on or off
-hws_settings = sublime.load_settings('highlight_whitespaces.sublime-settings')
-hws_enabled = bool(hws_settings.get('highlight_whitespaces_enabled',
-                                               DEFAULT_IS_ENABLED))
+hws_toggled = False
+hws_v3 = (int(sublime.version()) >= 3000)
+
+def plugin_loaded():
+    global hws_v3
+
+    if is_enabled(True) and hws_v3:
+        highlight_whitespaces(sublime.active_window().active_view())
+
+def is_enabled(init=False):
+    global hws_toggled
+
+    if init:
+        hws_toggled = bool(get_settings().get('highlight_whitespaces_enabled', DEFAULT_IS_ENABLED))
+    return hws_toggled
 
 def get_settings():
-    s = sublime.load_settings('highlight_whitespaces.sublime-settings')
-    return s
+    return sublime.load_settings('highlight_whitespaces.sublime-settings')
 
 # Determine if the view is a find results view
 def is_find_results(view):
@@ -100,12 +114,12 @@ def clear_whitespaces_highlight(window):
 # Toggle the event listner on or off
 class HwsToggleWhitespacesCommand(sublime_plugin.WindowCommand):
     def run(self):
-        global hws_enabled
-        hws_enabled = False if hws_enabled else True
+        global hws_toggled
+        hws_toggled = False if hws_toggled else True
 
         # If toggling on, go ahead and perform a pass,
         # else clear the highlighting in all views
-        if hws_enabled:
+        if hws_toggled:
             highlight_whitespaces(self.window.active_view())
         else:
             clear_whitespaces_highlight(self.window)
@@ -114,27 +128,31 @@ class HwsToggleWhitespacesCommand(sublime_plugin.WindowCommand):
 # Highlight matching regions.
 class WhitespacesHighlightListener(sublime_plugin.EventListener):
     def on_modified(self, view):
-        if hws_enabled:
+        if hws_toggled:
             highlight_whitespaces(view)
 
     def on_activated(self, view):
-        if hws_enabled:
+        if hws_toggled:
             highlight_whitespaces(view)
 
     def on_load(self, view):
-        if hws_enabled:
+        if hws_toggled:
             highlight_whitespaces(view)
 
 class WhitespacesHighlightListener2(sublime_plugin.EventListener):
     def on_modified(self, view):
-        if hws_enabled:
+        if hws_toggled:
             highlight_whitespaces(view)
 
     def on_activated(self, view):
-        if hws_enabled:
+        if hws_toggled:
             highlight_whitespaces(view)
 
     def on_load(self, view):
-        if hws_enabled:
+        if hws_toggled:
             highlight_whitespaces(view)
 
+
+# pluging init for ST2
+if not hws_v3:
+    plugin_loaded()
