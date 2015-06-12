@@ -21,10 +21,8 @@ Config summary (see README.md for details):
 Forked from https://github.com/SublimeText/TrailingSpaces/
   by Jean-Denis Vauguet <jd@vauguet.fr>, Oktay Acikalin <ok@ryotic.de>
 
-Forked from https://github.com/disq/HighlightWhitespaces
-  by Kemal Hadimli <disq@sf.net>
-
-@author: Salvatore Poliandro III <popsikle@gmail.com>
+@author: Kemal Hadimli <disq@sf.net>
+@contrib: Salvatore Poliandro III <popsikle@gmail.com>
 @license: MIT (http://www.opensource.org/licenses/mit-license.php)
 @since: 2015-06-05
 '''
