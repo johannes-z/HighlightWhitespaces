@@ -39,6 +39,7 @@ DEFAULT_CHECK_EOL = True
 DEFAULT_CHECK_TABS = True
 DEFAULT_CHECK_MIXED = True
 DEFAULT_LAST_WHITESPACE = False
+DEFAULT_SHOW_BORDERS = True
 
 hws_toggled = False
 hws_v3 = (int(sublime.version()) >= 3000)
@@ -103,6 +104,11 @@ def find_whitespaces_mixed(view):
 def highlight_whitespaces(view):
   hws_settings = get_settings()
 
+  show_borders = \
+    hws_settings.get('highlight_whitespaces_show_borders', DEFAULT_SHOW_BORDERS)
+
+  region = sublime.DRAW_EMPTY if show_borders else sublime.HIDDEN
+
   max_size = hws_settings.get('highlight_whitespaces_file_max_size',
                               DEFAULT_MAX_FILE_SIZE)
   space_scope_name = \
@@ -126,27 +132,27 @@ def highlight_whitespaces(view):
       space_regions = find_whitespaces_spaces(view)
       view.add_regions('WhitespacesHighlightListener',
                        space_regions, space_scope_name, '',
-                       sublime.DRAW_EMPTY)
+                       region)
 
     if hws_settings.get('highlight_whitespaces_check_tabs',
                         DEFAULT_CHECK_TABS):
       tab_regions = find_whitespaces_tabs(view)
       view.add_regions('WhitespacesHighlightListener2',
                        tab_regions, tab_scope_name, '',
-                       sublime.DRAW_EMPTY)
+                       region)
 
     if hws_settings.get('highlight_whitespaces_check_eol', DEFAULT_CHECK_EOL):
       eol_regions = find_whitespaces_eol(view)
       view.add_regions('WhitespacesHighlightListener3',
                        eol_regions, eol_scope_name, '',
-                       sublime.DRAW_EMPTY)
+                       region)
 
     if hws_settings.get('highlight_whitespaces_check_mixed',
                         DEFAULT_CHECK_MIXED):
       mixed_regions = find_whitespaces_mixed(view)
       view.add_regions('WhitespacesHighlightListener4',
                        mixed_regions, mixed_scope_name, '',
-                       sublime.DRAW_EMPTY)
+                       region)
 
 
 # Clear all white spaces
